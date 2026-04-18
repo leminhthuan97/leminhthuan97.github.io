@@ -98,7 +98,7 @@
     </div>
     <div class="ab-hero-content">
       <div class="ab-pre" data-en="Interior Designer / ArchViz Artist" data-vi="Nhà Thiết Kế Nội Thất / ArchViz Artist">Nhà Thiết Kế Nội Thất / ArchViz Artist</div>
-      <div class="ab-name" style="font-size: 50px !important;">Lê Minh Thuận<span class="ab-name-sub" style="font-size: 22px !important;">mith studio</span></div>
+      <div class="ab-name" style="font-size: 60px !important;">Lê Minh Thuận<span class="ab-name-sub" style="font-size: 22px !important;">mith studio</span></div>
       <div class="ab-tagline" data-en="5+ Years · Ho Chi Minh · Ha Noi · Da Nang · HongKong · Japan " data-vi="5+ Năm · Hồ Chí Minh · Hà Nội · Đà Nẵng · Hồng Kông · Nhật Bản ">5+ Năm · Hồ Chí Minh · Hà Nội · Đà Nẵng · Hồng Kông · Nhật Bản</div>
       <div class="ab-stats-row">
         <div class="ab-stat"><div class="ab-stat-n">5+</div><div class="ab-stat-l" data-en="Years experience." data-vi="Năm Kinh nghiệm.">Năm Kinh nghiệm.</div></div>
@@ -184,3 +184,68 @@
 })();
 </script></body>
 </html>
+<script type="module" src="assets/js/shared.js"></script>
+<script>
+/* ── Language system: Vietnamese default, EN toggle ── */
+(function(){
+  var STORAGE_KEY = 'mb_lang';
+  var lang = localStorage.getItem(STORAGE_KEY) || 'vi';
+
+  function applyLang(l){
+    lang = l;
+    localStorage.setItem(STORAGE_KEY, l);
+    document.documentElement.lang = l;
+
+    // Update all [data-en] / [data-vi] elements
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      var val = l === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-vi');
+      if(val !== null) el.innerHTML = val;
+    });
+
+    // Button shows the language you can switch TO
+    var btn = document.getElementById('lang-btn');
+    if(btn) btn.textContent = l === 'vi' ? 'EN' : 'VI';
+  }
+
+  // Override any toggleLang defined in shared.js
+  window.toggleLang = function(){
+    applyLang(lang === 'vi' ? 'en' : 'vi');
+  };
+
+  // Boot with stored or default (vi)
+  applyLang(lang);
+})();
+</script>
+<script>
+let cs=0;
+function goScene(n){
+  cs=Math.max(0,Math.min(n,2));
+  const scEl=document.getElementById('sc'+cs);
+  if(scEl)document.getElementById('page-home').scrollTo({top:scEl.offsetTop,behavior:'smooth'});
+}
+function nextScene(){goScene(cs+1);}
+function prevScene(){goScene(cs-1);}
+function scrollBelow(){
+  const sw=document.getElementById('sw');
+  document.getElementById('page-home').scrollTo({top:sw.offsetTop+sw.offsetHeight,behavior:'smooth'});
+}
+function scrollToTop(){document.getElementById('page-home').scrollTo({top:0,behavior:'smooth'});}
+
+document.getElementById('page-home').addEventListener('scroll',function(){
+  const st=this.scrollTop,vh=window.innerHeight;
+  cs=Math.min(2,Math.round(st/vh));
+},{passive:true});
+
+(function(){
+  const items=['3ds Max','Corona Renderer','Architectural Visualization','HongKong','Japan','Ho Chi Minh City','Đà Nẵng','Hà Nội','Lead 3D Artist','5+ Years International','10+ Projects','3 Countries'];
+  const s=items.map(t=>`<span>${t}</span><span class="sep">◆</span>`).join('');
+  document.getElementById('mq').innerHTML=s+s;
+})();
+/* Scroll-reveal for sfw cards */
+(function(){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('sfw-in'); io.unobserve(e.target); }});
+  }, {threshold: 0.08});
+  document.querySelectorAll('.sfw-card').forEach(c => io.observe(c));
+})();
+</script>
