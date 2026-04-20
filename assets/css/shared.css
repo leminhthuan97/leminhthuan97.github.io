@@ -51,3 +51,19 @@ p {
     transform: none !important;
     display: block !important;
 }
+/* Tinh chỉnh riêng cho màn hình điện thoại (kích thước dưới 768px) */
+@media (max-width: 768px) {
+    /* Thu nhỏ cụm tên ở góc */
+    .ab-name {
+        font-size: 22px !important; 
+    }
+    .ab-name-sub {
+        font-size: 14px !important; 
+    }
+    
+    /* Thu nhỏ chữ PORTFOLIO khổng lồ */
+    .s1-bleed, .s1-bleed-word, .s1-h {
+        font-size: 50px !important; /* Thu nhỏ lại để không tràn viền */
+        line-height: 1.2 !important;
+    }
+}
